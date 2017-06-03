@@ -72,7 +72,7 @@ public class MessageParserTest {
     @Test
     public void testParsePing() throws Exception {
         String[] newNicknames = { "davis1", "hello", "world", "itsme" };
-        String[] newAddrs = { "192.168.0.101", "192.168.0.102", "192.168.0.103" };
+        String[] newAddrs = { "192.168.0.101", "192.168.0.102", "192.168.0.103", "192.168.0.104" };
 
         for (int i = 0; i < newNicknames.length; i++) {
             DatagramPacket packet = builder.makePing(newNicknames[i]);
