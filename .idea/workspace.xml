@@ -11,8 +11,9 @@
     <file path="/fragment.java" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496493912841" ignored="false" />
     <file path="/SyncThreadTest.java" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496494014411" ignored="false" />
     <file path="/Dummy.txt" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496493912841" ignored="false" />
-    <file path="/MessageBuilder.java" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496495633518" ignored="false" />
+    <file path="/MessageBuilder.java" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496496300905" ignored="false" />
     <file path="/ChatGroup.java" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496495354482" ignored="false" />
+    <file path="/MessageParser.java" changelist="de02e0a7-b743-417c-aaa1-4bb7bfd6e2ab" time="1496496492662" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +75,7 @@
       <file leaf-file-name="ChatGroup.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ChatGroup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="4" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0">
+            <state line="32" column="0" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -82,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageBuilder.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MessageBuilder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MessageBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="20" selection-start="233" selection-end="233" vertical-scroll-proportion="0.17921147">
+            <state line="23" column="49" selection-start="618" selection-end="618" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,10 +94,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageParser.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="MessageParser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/MessageParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="26" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0">
+            <state line="16" column="18" selection-start="356" selection-end="356" vertical-scroll-proportion="0.28673837">
               <folding />
             </state>
           </provider>
@@ -118,6 +119,7 @@
         <option value="$PROJECT_DIR$/src/SyncThreadTest.java" />
         <option value="$PROJECT_DIR$/src/ChatGroup.java" />
         <option value="$PROJECT_DIR$/src/MessageBuilder.java" />
+        <option value="$PROJECT_DIR$/src/MessageParser.java" />
       </list>
     </option>
   </component>
@@ -483,9 +485,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/MessageBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="49" selection-start="618" selection-end="618" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ChatGroup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="4" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0">
+        <state line="32" column="0" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -494,17 +505,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MessageParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="26" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0">
+        <state line="16" column="18" selection-start="356" selection-end="356" vertical-scroll-proportion="0.28673837">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MessageBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="20" selection-start="233" selection-end="233" vertical-scroll-proportion="0.17921147">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

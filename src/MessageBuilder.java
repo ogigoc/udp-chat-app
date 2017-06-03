@@ -21,7 +21,7 @@ public class MessageBuilder {
         return null;
     }
 
-    public DatagramPacket makePing() {
+    public DatagramPacket makePing(String nickname) {
         return null;
     }
 
