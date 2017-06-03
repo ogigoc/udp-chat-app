@@ -16,7 +16,15 @@ public class ChatGroup {
     private HashMap<String, InetAddress> nicknameToAddress = new HashMap<>();
 
     public synchronized void registerPing(InetAddress address, String nickname) {
-        if(this.nicknameToAddress.containsKey(nickname + "[" + address.getHostName() + "]") && this.nicknameToAddress.get(nickname + "[" + address.getHostName() + "]").equals(address)) {
+
+        boolean exists = false;
+        for(String name : this.nicknameToAddress.keySet()) {
+            if(name.startsWith(nickname + "[")) {
+                exists = true;
+            }
+        }
+
+        if(exists) {
             nickname = nickname + "[" + address.getHostName() + "]";
         }
 
