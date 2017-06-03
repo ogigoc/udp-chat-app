@@ -49,24 +49,39 @@ public class MessageParser {
         chatGroup.registerPing(addr, username);
     }
 
-    public String parsePrivateMessage(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
-        String message = extractData(buffer);
+    private String getUsername(InetAddress addr) {
         String username = chatGroup.getUsername(addr);
         if (username == null) {
             username = "[UNKNOWN]";
         }
 
+        return username;
+    }
+
+    public String parsePrivateMessage(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
+        String message = extractData(buffer);
+
         StringBuilder sb = new StringBuilder();
         sb.append("[Private] <");
-        sb.append(username);
+        sb.append(getUsername(addr));
         sb.append("> ");
         sb.append(message);
+        sb.append('\n');
 
        return sb.toString();
     }
 
     public String parsePublicMessage(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
-        return "";
+        String message = extractData(buffer);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('<');
+        sb.append(getUsername(addr));
+        sb.append("> ");
+        sb.append(message);
+        sb.append('\n');
+
+       return sb.toString();
     }
 
     private String extractData(ByteBuffer buffer) throws InvalidMessageException {
