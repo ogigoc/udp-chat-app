@@ -1,4 +1,7 @@
+import jdk.nashorn.internal.objects.NativeArray;
+
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -15,13 +18,41 @@ public class ChatGroup {
     private HashMap<String, InetAddress> nicknameToAddress = new HashMap<>();
 
     public synchronized void registerPing(InetAddress address, String nickname) {
+        if(this.nicknameToAddress.containsKey(nickname) && !this.nicknameToAddress.get(nickname).equals(address)) {
+
+            InetAddress oldAddress = this.nicknameToAddress.get(nickname);
+            String oldNick = nickname + "[" + oldAddress.getHostName() + "]";
+            Date oldDate = this.lastPingTime.get(oldAddress);
+
+            InetAddress newAddress = address;
+            String newNick = nickname + "[" + newAddress.getHostName() + "]";
+
+            this.lastPingTime.put(oldAddress, oldDate);
+            this.addressToNickname.put(oldAddress, oldNick);
+            this.nicknameToAddress.remove(nickname);
+            this.nicknameToAddress.put(oldNick, oldAddress);
+
+            this.lastPingTime.put(newAddress, new Date());
+            this.addressToNickname.put(newAddress, newNick);
+            this.nicknameToAddress.put(newNick, newAddress);
+
+            return;
+        }
+
+        if(this.addressToNickname.containsKey(address) && !this.addressToNickname.get(address).equals(nickname)) {
+            String oldNick = this.addressToNickname.get(address);
+
+            this.nicknameToAddress.remove(oldNick);
+        }
+        this.lastPingTime.put(address, new Date());
+        this.addressToNickname.put(address, nickname);
         this.nicknameToAddress.put(nickname, address);
     }
 
     // getUsername() ako ima vise od jedan sa istim usernameom onda
     // vrati username[ip]
     public synchronized String getUsername(InetAddress address) {
-        return "mock";
+        return this.addressToNickname.get(address);
     }
 
     // getAddress() ako ima vise od jedan sa istim usernameom onda
@@ -31,7 +62,25 @@ public class ChatGroup {
     }
 
     public synchronized void removeDeadClients() {
+        Date now = new Date();
+        ArrayList<InetAddress> expiredAddresses = new ArrayList<>();
 
+        for(InetAddress a : this.lastPingTime.keySet()) {
+            if(now.getTime() - this.lastPingTime.get(a).getTime() > ProtocolConstants.EXPIRATION_TIME) {
+                expiredAddresses.add(a);
+            }
+        }
+
+        for(InetAddress a : expiredAddresses) {
+            this.removeAddress(a);
+        }
+    }
+
+    private void removeAddress(InetAddress a) {
+        String nick = this.addressToNickname.get(a);
+        this.lastPingTime.remove(a);
+        this.addressToNickname.remove(a);
+        this.nicknameToAddress.remove(nick);
     }
 
     public HashMap<InetAddress, Date> getLastPingTime() {
