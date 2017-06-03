@@ -47,6 +47,10 @@ public class MessageBuilder {
 
     public DatagramPacket makePrivateMessage(String destinationUsername, String messageText) {
         InetAddress address = chatGroup.getAddress(destinationUsername);
+        if (address == null) {
+            return null;
+        }
+
         return makeMessage(messageText, ProtocolConstants.TYPE_PRIVATE_MESSAGE, address);
     }
 }

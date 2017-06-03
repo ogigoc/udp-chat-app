@@ -32,8 +32,7 @@ public class ReceiverThread implements Runnable {
             try {
                 socket.receive(packet);
             } catch (IOException e) {
-                System.err.println("[ERR ] Failed receiving from socket. Bailing.");
-                return;
+                continue;
             }
 
             try {

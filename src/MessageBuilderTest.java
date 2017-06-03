@@ -74,4 +74,10 @@ public class MessageBuilderTest {
             checkMessage(packet, TestConstants.GROUP_ADDRESS, ProtocolConstants.TYPE_PING, nicknameBytes);
         }
     }
+
+    @Test
+    public void testNonExistentUsername() throws Exception {
+        DatagramPacket packet = uut.makePrivateMessage("noexist", "test msg text");
+        Assert.assertNull(packet);
+    }
 }

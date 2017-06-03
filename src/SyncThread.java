@@ -2,8 +2,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,8 +34,6 @@ public class SyncThread implements Runnable {
             try {
                 Thread.sleep(ProtocolConstants.PING_INTERVAL);
             } catch (InterruptedException e) {
-                System.err.println("OgiException: SyncThread interupted while speeping.");
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 return;
             }
         }
