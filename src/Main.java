@@ -11,7 +11,7 @@ public class Main {
     private static boolean mainLoop(MessageBuilder builder, MulticastSocket socket, BufferedReader stdin) {
         try {
             String command = stdin.readLine();
-            if (command.isEmpty()) {
+            if (command == null || command.isEmpty()) {
                 return true;
             }
 
@@ -88,6 +88,13 @@ public class Main {
         ReceiverThread receiver = new ReceiverThread(socket, chatGroup);
         Thread receiverThread = new Thread(receiver);
         receiverThread.start();
+
+        System.err.println("[INFO] Waiting to sync...");
+        try {
+            Thread.sleep(2 * ProtocolConstants.PING_INTERVAL);
+        } catch (InterruptedException e) {}
+        System.err.println("[INFO] Ready!");
+
 
         MessageBuilder builder = new MessageBuilder(address, chatGroup);
         while (mainLoop(builder, socket, br));
