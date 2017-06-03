@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -18,17 +17,6 @@ import java.nio.ByteOrder;
 public class MessageBuilderTest {
     private ChatGroup group;
     private MessageBuilder uut;
-
-    private final String[] MESSAGE_TEXTS = { "girice da", "girice ne", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "ћирилица бато" };
-    private final String[] NICKNAMES = { "davis", "ogi", "midza" };
-    private final String[] NICKNAME_ADDRESSES = { "192.168.0.1", "192.168.0.2", "192.168.0.3" };
-    private final String GROUP_ADDRESS = "239.1.1.1";
-
-    private void addMockUsernames() throws UnknownHostException {
-        for (int i = 0; i <  NICKNAMES.length; i++) {
-            group.registerPing(InetAddress.getByName(NICKNAME_ADDRESSES[i]), NICKNAMES[i]);
-        }
-    }
 
     private void checkMessage(DatagramPacket packet, String address, byte type, byte[] textBytes) throws Exception {
         Assert.assertEquals(packet.getAddress(), InetAddress.getByName(address));
@@ -51,39 +39,39 @@ public class MessageBuilderTest {
     @Before
     public void setUp() throws Exception {
         group = new ChatGroup();
-        uut = new MessageBuilder(InetAddress.getByName(GROUP_ADDRESS), group);
-        addMockUsernames();
+        TestConstants.addMockUsernames(group);
+        uut = new MessageBuilder(InetAddress.getByName(TestConstants.GROUP_ADDRESS), group);
     }
 
     @Test
     public void testMakePublicMessage() throws Exception {
-        for (String text : MESSAGE_TEXTS) {
+        for (String text : TestConstants.MESSAGE_TEXTS) {
             byte[] textBytes = text.getBytes("UTF-8");
 
             DatagramPacket packet = uut.makePublicMessage(text);
-            checkMessage(packet, GROUP_ADDRESS, ProtocolConstants.TYPE_PUBLIC_MESSAGE, textBytes);
+            checkMessage(packet, TestConstants.GROUP_ADDRESS, ProtocolConstants.TYPE_PUBLIC_MESSAGE, textBytes);
         }
     }
 
     @Test
     public void testMakePrivateMessage() throws Exception {
-        for (String text : MESSAGE_TEXTS) {
+        for (String text : TestConstants.MESSAGE_TEXTS) {
             byte[] textBytes = text.getBytes("UTF-8");
 
-            for (int i = 0; i < NICKNAMES.length; i++) {
-                DatagramPacket packet = uut.makePrivateMessage(NICKNAMES[i], text);
-                checkMessage(packet, NICKNAME_ADDRESSES[i], ProtocolConstants.TYPE_PRIVATE_MESSAGE, textBytes);
+            for (int i = 0; i < TestConstants.NICKNAMES.length; i++) {
+                DatagramPacket packet = uut.makePrivateMessage(TestConstants.NICKNAMES[i], text);
+                checkMessage(packet, TestConstants.NICKNAME_ADDRESSES[i], ProtocolConstants.TYPE_PRIVATE_MESSAGE, textBytes);
             }
         }
     }
 
     @Test
     public void testMakePing() throws Exception {
-        for (String nickname : NICKNAMES) {
+        for (String nickname : TestConstants.NICKNAMES) {
             byte[] nicknameBytes = nickname.getBytes("UTF-8");
 
             DatagramPacket packet = uut.makePing(nickname);
-            checkMessage(packet, GROUP_ADDRESS, ProtocolConstants.TYPE_PING, nicknameBytes);
+            checkMessage(packet, TestConstants.GROUP_ADDRESS, ProtocolConstants.TYPE_PING, nicknameBytes);
         }
     }
 }
