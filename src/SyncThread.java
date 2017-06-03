@@ -1,3 +1,5 @@
+import java.net.MulticastSocket;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ognjen
@@ -6,6 +8,11 @@
  * To change this template use File | Settings | File Templates.
  */
 public class SyncThread implements Runnable {
+    private MulticastSocket socket;
+
+    public SyncThread(MulticastSocket socket) {
+        this.socket = socket;
+    }
 
     public void run() {
 
