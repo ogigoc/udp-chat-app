@@ -13,5 +13,6 @@ public class ProtocolConstants {
     public static final byte[] HEADER = { 'P', 'C', 'R' };
     public static final int PING_INTERVAL = 10 * 1000;
     public static final int EXPIRATION_TIME = 30 * 1000;
+    public static final int RECEIVE_TIMEOUT = 10 * 1000;
     public static final String USERNAME_REGEX = "[-a-zA-Z0-9_]+";
 }
