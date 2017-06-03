@@ -70,6 +70,7 @@ public class ChatGroup {
         }
 
         for(InetAddress a : expiredAddresses) {
+            System.out.println("[Offline] " + addressToNickname.get(a));
             this.removeAddress(a);
         }
     }

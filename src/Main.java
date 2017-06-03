@@ -80,8 +80,9 @@ public class Main {
         }
 
         ChatGroup chatGroup = new ChatGroup();
+        System.err.println("[INFO] Waiting to sync...");
 
-        SyncThread sync = new SyncThread(socket, address, nick);
+        SyncThread sync = new SyncThread(socket, address, nick, chatGroup);
         Thread syncThread = new Thread(sync);
         syncThread.start();
 
@@ -89,7 +90,6 @@ public class Main {
         Thread receiverThread = new Thread(receiver);
         receiverThread.start();
 
-        System.err.println("[INFO] Waiting to sync...");
         try {
             Thread.sleep(2 * ProtocolConstants.PING_INTERVAL);
         } catch (InterruptedException e) {}

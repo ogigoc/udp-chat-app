@@ -13,11 +13,13 @@ import java.net.MulticastSocket;
 public class SyncThread implements Runnable {
     private MulticastSocket socket;
     private String nickname;
+    private ChatGroup chatGroup;
     private MessageBuilder mb;
 
-    public SyncThread(MulticastSocket socket, InetAddress address, String nickname) {
+    public SyncThread(MulticastSocket socket, InetAddress address, String nickname, ChatGroup chatGroup) {
         this.socket = socket;
         this.nickname = nickname;
+        this.chatGroup = chatGroup;
         this.mb = new MessageBuilder(address, null);
     }
 
@@ -36,6 +38,8 @@ public class SyncThread implements Runnable {
             } catch (InterruptedException e) {
                 return;
             }
+
+            chatGroup.removeDeadClients();
         }
     }
 }

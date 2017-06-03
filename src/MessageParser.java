@@ -36,17 +36,29 @@ public class MessageParser {
         switch (type) {
             case ProtocolConstants.TYPE_PUBLIC_MESSAGE: return parsePublicMessage(message.getAddress(), buffer);
             case ProtocolConstants.TYPE_PRIVATE_MESSAGE: return parsePrivateMessage(message.getAddress(), buffer);
-            case ProtocolConstants.TYPE_PING: parsePing(message.getAddress(), buffer); return null;
+            case ProtocolConstants.TYPE_PING: return parsePing(message.getAddress(), buffer);
             default: throw new InvalidMessageException("Unrecognized message type");
         }
     }
 
-    public void parsePing(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
+    public String parsePing(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
         String username = extractData(buffer);
         if (!username.matches(ProtocolConstants.USERNAME_REGEX)) {
             throw new InvalidMessageException("Invalid username");
         }
+
+        String ret = null;
+        if (chatGroup.getLastPingTime().get(addr) == null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("[Online]  ");
+            sb.append(username);
+            sb.append('\n');
+
+            ret = sb.toString();
+        }
         chatGroup.registerPing(addr, username);
+
+        return ret;
     }
 
     private String getUsername(InetAddress addr) {
@@ -75,7 +87,7 @@ public class MessageParser {
         String message = extractData(buffer);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("[Public] <");
+        sb.append("[Public]  <");
         sb.append(getUsername(addr));
         sb.append("> ");
         sb.append(message);

@@ -33,7 +33,7 @@ public class MessageParserTest {
                 packet.setAddress(InetAddress.getByName(TestConstants.NICKNAME_ADDRESSES[i]));
 
                 String output = uut.parse(packet);
-                Assert.assertEquals("[Public] <" + TestConstants.NICKNAMES[i] + "> " + text + "\n", output);
+                Assert.assertEquals("[Public]  <" + TestConstants.NICKNAMES[i] + "> " + text + "\n", output);
             }
         }
     }
@@ -64,13 +64,13 @@ public class MessageParserTest {
                 packet = builder.makePublicMessage(text);
                 packet.setAddress(InetAddress.getByName("10.0.0.2"));
                 output = uut.parse(packet);
-                Assert.assertEquals("[Public] <[UNKNOWN]> " + text + "\n", output);
+                Assert.assertEquals("[Public]  <[UNKNOWN]> " + text + "\n", output);
             }
         }
     }
 
     @Test
-    public void testParsePing() throws Exception {
+    public void testParsePingNewClient() throws Exception {
         String[] newNicknames = { "davis1", "hello", "world", "itsme" };
         String[] newAddrs = { "192.168.0.101", "192.168.0.102", "192.168.0.103", "192.168.0.104" };
 
@@ -79,8 +79,19 @@ public class MessageParserTest {
             packet.setAddress(InetAddress.getByName(newAddrs[i]));
 
             String output = uut.parse(packet);
-            Assert.assertEquals(null, output);
+            Assert.assertEquals("[Online]  " + newNicknames[i] + "\n", output);
             Assert.assertEquals(InetAddress.getByName(newAddrs[i]), group.getNicknameToAddress().get(newNicknames[i]));
+        }
+    }
+
+    @Test
+    public void testParsePingOldClient() throws Exception {
+        for (int i = 0; i < TestConstants.NICKNAMES.length; i++) {
+            DatagramPacket packet = builder.makePing(TestConstants.NICKNAMES[i]);
+            packet.setAddress(InetAddress.getByName(TestConstants.NICKNAME_ADDRESSES[i]));
+
+            String output = uut.parse(packet);
+            Assert.assertNull(output);
         }
     }
 
