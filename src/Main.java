@@ -6,7 +6,6 @@ import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 
 public class Main {
-    private static final int PORT = 12555;
 
     private static boolean mainLoop() {
         try {
@@ -39,7 +38,7 @@ public class Main {
 
         MulticastSocket socket;
         try {
-            socket = new MulticastSocket(PORT);
+            socket = new MulticastSocket(ProtocolConstants.PORT);
             socket.joinGroup(InetAddress.getByName(addr));
         } catch (UnknownHostException e) {
             System.out.println("Unknown host.");

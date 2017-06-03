@@ -1,5 +1,6 @@
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,7 +19,19 @@ public class MessageBuilder {
     }
 
     public DatagramPacket makePublicMessage(String messageText) {
-        return null;
+        try {
+            byte[] textBytes = messageText.getBytes("UTF-8");
+            ByteBuffer buffer = ByteBuffer.allocate(ProtocolConstants.HEADER.length + 1 + 4 + textBytes.length);
+            buffer.put(ProtocolConstants.HEADER)
+                    .put(ProtocolConstants.TYPE_PUBLIC_MESSAGE)
+                    .putInt(textBytes.length)
+                    .put(textBytes);
+
+            byte[] bytes = buffer.array();
+            return new DatagramPacket(bytes, bytes.length, groupAddress, ProtocolConstants.PORT);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public DatagramPacket makePing(String nickname) {
