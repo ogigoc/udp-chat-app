@@ -1,6 +1,7 @@
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,27 +19,34 @@ public class MessageBuilder {
         this.groupAddress = groupAddress;
     }
 
-    public DatagramPacket makePublicMessage(String messageText) {
+    private DatagramPacket makeMessage(String text, byte type, InetAddress address) {
         try {
-            byte[] textBytes = messageText.getBytes("UTF-8");
+            byte[] textBytes = text.getBytes("UTF-8");
             ByteBuffer buffer = ByteBuffer.allocate(ProtocolConstants.HEADER.length + 1 + 4 + textBytes.length);
+            buffer.order(ByteOrder.BIG_ENDIAN);
+
             buffer.put(ProtocolConstants.HEADER)
-                    .put(ProtocolConstants.TYPE_PUBLIC_MESSAGE)
+                    .put(type)
                     .putInt(textBytes.length)
                     .put(textBytes);
 
             byte[] bytes = buffer.array();
-            return new DatagramPacket(bytes, bytes.length, groupAddress, ProtocolConstants.PORT);
+            return new DatagramPacket(bytes, bytes.length, address, ProtocolConstants.PORT);
         } catch (Exception e) {
             return null;
         }
     }
 
+    public DatagramPacket makePublicMessage(String messageText) {
+        return makeMessage(messageText, ProtocolConstants.TYPE_PUBLIC_MESSAGE, groupAddress);
+    }
+
     public DatagramPacket makePing(String nickname) {
-        return null;
+        return makeMessage(nickname, ProtocolConstants.TYPE_PING, groupAddress);
     }
 
     public DatagramPacket makePrivateMessage(String destinationUsername, String messageText) {
-        return null;
+        InetAddress address = chatGroup.getAddress(destinationUsername);
+        return makeMessage(messageText, ProtocolConstants.TYPE_PRIVATE_MESSAGE, address);
     }
 }

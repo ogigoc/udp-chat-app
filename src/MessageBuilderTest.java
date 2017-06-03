@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,6 +35,8 @@ public class MessageBuilderTest {
         Assert.assertEquals(packet.getLength(), ProtocolConstants.HEADER.length + 1 + 4 + textBytes.length);
 
         ByteBuffer buf = ByteBuffer.wrap(packet.getData());
+        buf.order(ByteOrder.BIG_ENDIAN);
+
         byte[] header = new byte[ProtocolConstants.HEADER.length];
         buf.get(header);
         Assert.assertArrayEquals(ProtocolConstants.HEADER, header);
@@ -41,6 +44,7 @@ public class MessageBuilderTest {
         Assert.assertEquals(textBytes.length, buf.getInt());
 
         byte[] msg = new byte[textBytes.length];
+        buf.get(msg);
         Assert.assertArrayEquals(textBytes, msg);
     }
 
