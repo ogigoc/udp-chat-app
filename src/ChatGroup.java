@@ -15,6 +15,7 @@ public class ChatGroup {
     private HashMap<String, InetAddress> nicknameToAddress = new HashMap<>();
 
     public synchronized void registerPing(InetAddress address, String nickname) {
+        this.nicknameToAddress.put(nickname, address);
     }
 
     // getUsername() ako ima vise od jedan sa istim usernameom onda
@@ -26,10 +27,22 @@ public class ChatGroup {
     // getAddress() ako ima vise od jedan sa istim usernameom onda
     // prihvata username[ip], u suprotnom username
     public synchronized InetAddress getAddress(String username) {
-        return null;
+        return this.nicknameToAddress.get(username);
     }
 
     public synchronized void removeDeadClients() {
 
+    }
+
+    public HashMap<InetAddress, Date> getLastPingTime() {
+        return lastPingTime;
+    }
+
+    public HashMap<InetAddress, String> getAddressToNickname() {
+        return addressToNickname;
+    }
+
+    public HashMap<String, InetAddress> getNicknameToAddress() {
+        return nicknameToAddress;
     }
 }
