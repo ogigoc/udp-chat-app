@@ -16,6 +16,10 @@ public class ChatGroup {
     private HashMap<String, InetAddress> nicknameToAddress = new HashMap<>();
 
     public synchronized void registerPing(InetAddress address, String nickname) {
+        if(this.nicknameToAddress.containsKey(nickname + "[" + address.getHostName() + "]") && this.nicknameToAddress.get(nickname + "[" + address.getHostName() + "]").equals(address)) {
+            nickname = nickname + "[" + address.getHostName() + "]";
+        }
+
         if(this.nicknameToAddress.containsKey(nickname) && !this.nicknameToAddress.get(nickname).equals(address)) {
 
             InetAddress oldAddress = this.nicknameToAddress.get(nickname);
