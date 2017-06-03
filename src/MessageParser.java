@@ -42,16 +42,31 @@ public class MessageParser {
     }
 
     public void parsePing(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
-        String username =
-
+        String username = extractData(buffer);
+        if (!username.matches(ProtocolConstants.USERNAME_REGEX)) {
+            throw new InvalidMessageException("Invalid username");
+        }
+        chatGroup.registerPing(addr, username);
     }
 
     public String parsePrivateMessage(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
+        String message = extractData(buffer);
+        String username = chatGroup.getUsername(addr);
+        if (username == null) {
+            username = "[UNKNOWN]";
+        }
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("[Private] <");
+        sb.append(username);
+        sb.append("> ");
+        sb.append(message);
+
+       return sb.toString();
     }
 
     public String parsePublicMessage(InetAddress addr, ByteBuffer buffer) throws InvalidMessageException {
-
+        return "";
     }
 
     private String extractData(ByteBuffer buffer) throws InvalidMessageException {

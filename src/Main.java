@@ -24,7 +24,7 @@ public class Main {
             do {
                 System.out.print("Choose a nickname:                   ");
                 nick = br.readLine();
-            } while (!nick.matches("[-a-zA-Z0-9_]+"));
+            } while (!nick.matches(ProtocolConstants.USERNAME_REGEX));
 
             System.out.print("Multicast group to join [239.1.1.1]: ");
             addr = br.readLine();
