@@ -75,7 +75,7 @@ public class MessageParser {
         String message = extractData(buffer);
 
         StringBuilder sb = new StringBuilder();
-        sb.append('<');
+        sb.append("[Public] <");
         sb.append(getUsername(addr));
         sb.append("> ");
         sb.append(message);

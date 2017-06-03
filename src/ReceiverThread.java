@@ -38,7 +38,7 @@ public class ReceiverThread implements Runnable {
             try {
                 String output = parser.parse(packet);
                 if (output != null) {
-                    System.out.println(output);
+                    System.out.print(output);
                 }
             } catch (InvalidMessageException e) {
                 System.err.println("[WARN] Got invalid message: " + e.getMessage());

@@ -33,7 +33,7 @@ public class MessageParserTest {
                 packet.setAddress(InetAddress.getByName(TestConstants.NICKNAME_ADDRESSES[i]));
 
                 String output = uut.parse(packet);
-                Assert.assertEquals("<" + TestConstants.NICKNAMES[i] + "> " + text + "\n", output);
+                Assert.assertEquals("[Public] <" + TestConstants.NICKNAMES[i] + "> " + text + "\n", output);
             }
         }
     }
@@ -64,7 +64,7 @@ public class MessageParserTest {
                 packet = builder.makePublicMessage(text);
                 packet.setAddress(InetAddress.getByName("10.0.0.2"));
                 output = uut.parse(packet);
-                Assert.assertEquals("<[UNKNOWN]> " + text + "\n", output);
+                Assert.assertEquals("[Public] <[UNKNOWN]> " + text + "\n", output);
             }
         }
     }

@@ -10,7 +10,6 @@ public class Main {
 
     private static boolean mainLoop(MessageBuilder builder, MulticastSocket socket, BufferedReader stdin) {
         try {
-            System.out.print("❯ ");
             String command = stdin.readLine();
             if (command.isEmpty()) {
                 return true;
